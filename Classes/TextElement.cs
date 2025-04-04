@@ -16,6 +16,8 @@ public class TextElement : Element
     
     public float FontSize { get; set; } = 14f;
     
+    public FontStyle FontStyle { get; set; } = FontStyle.Regular;
+    
     public AlignmentX TextAlignment { get; set; } = AlignmentX.Left;
     
     public string Color { get; set; } = "#FFFFFF";
@@ -38,7 +40,7 @@ public class TextElement : Element
     public SolidBrush Brush => new SolidBrush(ColorTranslator.FromHtml(Color));
     
     [JsonIgnore]
-    public Font Font => new Font(FontFamily, FontSize);
+    public Font Font => new Font(FontFamily, FontSize, FontStyle);
     
     [JsonIgnore]
     public SizeF Size
