@@ -1,0 +1,109 @@
+{
+  "Width": 800,
+  "Height": 400,
+  "Background": "#2C2F33",
+  "Children": [
+    {
+      "$type": "CardDesigner.Classes.ShapeElement, CardDesigner",
+      "Position": {
+        "$type": "CardDesigner.Classes.AbsolutPosition, CardDesigner",
+        "X": 0,
+        "Y": 0
+      },
+      "Width": 800,
+      "Height": 60,
+      "Background": "#23272A",
+      "Shape": "Rectangle",
+      "Children": [
+        {
+          "$type": "CardDesigner.Classes.ShapeElement, CardDesigner",
+          "Position": {
+            "$type": "CardDesigner.Classes.RelativePosition, CardDesigner",
+            "AlignmentX": "Center",
+            "AlignmentY": "Middle"
+          },
+          "Width": 780,
+          "Height": 50,
+          "Background": "#7289DA",
+          "Shape": "Rectangle",
+          "Children": [
+            {
+              "$type": "CardDesigner.Classes.TextElement, CardDesigner",
+              "Position": {
+                "$type": "CardDesigner.Classes.RelativePosition, CardDesigner",
+                "AlignmentX": "Center",
+                "AlignmentY": "Middle"
+              },
+              "Content": "Willkommen auf MeinTollerServer!",
+              "FontSize": 28,
+              "FontStyle": "Bold"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "CardDesigner.Classes.ShapeElement, CardDesigner",
+      "Position": {
+        "$type": "CardDesigner.Classes.AbsolutPosition, CardDesigner",
+        "X": 10,
+        "Y": 70
+      },
+      "Width": 540,
+      "Height": 320,
+      "Shape": "Rectangle",
+      "Children": [
+        {
+          "$type": "CardDesigner.Classes.TextElement, CardDesigner",
+          "Position": {
+            "$type": "CardDesigner.Classes.RelativePosition, CardDesigner",
+            "AlignmentX": "Center",
+            "AlignmentY": "Middle"
+          },
+          "TextAlignment": "Center",
+          "Content": "Wir freuen uns, dich zu begrüßen.\r\nKaffe und Kuchen stehen bereits\r\nfür dich bereit.\r\n\r\nGrüße,\r\ndein Server-Team <3",
+          "FontSize": 20,
+          "Color": "#99AAB5"
+        }
+      ]
+    },
+    {
+      "$type": "CardDesigner.Classes.ShapeElement, CardDesigner",
+      "Position": {
+        "$type": "CardDesigner.Classes.AbsolutPosition, CardDesigner",
+        "X": 560,
+        "Y": 70
+      },
+      "Width": 230,
+      "Height": 320,
+      "Shape": "Rectangle",
+      "Children": [
+        {
+          "$type": "CardDesigner.Classes.ShapeElement, CardDesigner",
+          "Position": {
+            "$type": "CardDesigner.Classes.RelativePosition, CardDesigner",
+            "AlignmentX": "Center",
+            "AlignmentY": "Middle"
+          },
+          "Width": 214,
+          "Height": 214,
+          "BorderThickness": 4,
+          "Color": "#43A25A",
+          "Shape": "Circle"
+        },
+        {
+          "$type": "CardDesigner.Classes.ImageElement, CardDesigner",
+          "Position": {
+            "$type": "CardDesigner.Classes.RelativePosition, CardDesigner",
+            "AlignmentX": "Center",
+            "AlignmentY": "Middle"
+          },
+          "Width": 200,
+          "Height": 200,
+          "Path": "https://cdn.discordapp.com/embed/avatars/0.png",
+          "Shape": "Circle"
+        }
+      ]
+    }
+  ]
+}
