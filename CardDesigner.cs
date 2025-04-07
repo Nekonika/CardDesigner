@@ -142,6 +142,66 @@ public static class CardDesigner
                         throw new ArgumentOutOfRangeException();
                 }
                 break;
+            
+            case ProgressBarElement ProgressBarElement:
+                float FilledWidth = (ProgressBarElement.Value / 100f) * ProgressBarElement.Width;
+                using (SolidBrush FillBrush = new SolidBrush(ColorTranslator.FromHtml(ProgressBarElement.Color)))
+                using (Pen BorderPen = new Pen(ColorTranslator.FromHtml(ProgressBarElement.BorderColor), ProgressBarElement.BorderWidth))
+                {
+                    switch (ProgressBarElement.Shape)
+                    {
+                        case Shape.Rectangle:
+                            template.Graphics.FillRectangle(BackgroundBrush, X, Y, ProgressBarElement.Width, ProgressBarElement.Height);
+                            template.Graphics.FillRectangle(FillBrush, X, Y, FilledWidth, ProgressBarElement.Height);
+                            template.Graphics.DrawRectangle(BorderPen, X, Y, ProgressBarElement.Width, ProgressBarElement.Height);
+                            break;
+                        
+                        case Shape.Circle:
+                            using (GraphicsPath Border = new GraphicsPath())
+                            {
+                                Border.StartFigure();
+                                Border.AddArc(X, Y, ProgressBarElement.Height, ProgressBarElement.Height, 90, 180);
+                                Border.AddArc(X + ProgressBarElement.Width - ProgressBarElement.Height, Y, ProgressBarElement.Height, ProgressBarElement.Height, 270, 180);
+                                Border.CloseFigure();
+                                
+                                // Background
+                                template.Graphics.FillPath(BackgroundBrush, Border);
+                                
+                                // Progress
+                                using (GraphicsPath FilledPath = new GraphicsPath())
+                                {
+                                    if (FilledWidth > 0)
+                                    {
+                                        FilledPath.StartFigure();
+                                        FilledPath.AddArc(X, Y, ProgressBarElement.Height, ProgressBarElement.Height, 90, 180);
+                                        if (FilledWidth > ProgressBarElement.Height)
+                                        {
+                                            float Radius = ProgressBarElement.Height / 2f;
+                                            float FilledRight = X + FilledWidth;
+                                            FilledPath.AddLine(X + Radius, Y, FilledRight - Radius, Y);
+                                            FilledPath.AddArc(FilledRight - ProgressBarElement.Height, Y, ProgressBarElement.Height, ProgressBarElement.Height, 270, 180);
+                                        }
+                                        else
+                                        {
+                                            FilledPath.AddArc(X, Y, FilledWidth * 2, ProgressBarElement.Height, 90, -180);
+                                        }
+                                        FilledPath.CloseFigure();
+                                        
+                                        template.Graphics.FillPath(FillBrush, FilledPath);
+                                    }
+                                }
+                                
+                                // Border
+                                template.Graphics.DrawPath(BorderPen, Border);
+                            }
+                            break;
+                        
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                break;
+                }
         }
 
         foreach (Element Child in element.Children)
