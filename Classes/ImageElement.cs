@@ -1,4 +1,5 @@
-﻿using CardDesigner.Enums;
+﻿using System.ComponentModel;
+using CardDesigner.Enums;
 using Newtonsoft.Json;
 
 namespace CardDesigner.Classes;
@@ -9,6 +10,8 @@ public class ImageElement : Element
     [JsonRequired]
     public required string Path { get; set; }
     
+    [DefaultValue(Shape.Rectangle)]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public Shape Shape { get; set; } = Shape.Rectangle;
     
     [JsonRequired]

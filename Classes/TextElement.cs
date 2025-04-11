@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using CardDesigner.Enums;
 using Newtonsoft.Json;
@@ -12,14 +13,24 @@ public class TextElement : Element
     [JsonRequired]
     public required string Content { get; set; }
     
+    [DefaultValue("Arial")]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public string FontFamily { get; set; } = "Arial";
     
+    [DefaultValue(14f)]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public float FontSize { get; set; } = 14f;
     
+    [DefaultValue(FontStyle.Regular)]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public FontStyle FontStyle { get; set; } = FontStyle.Regular;
     
+    [DefaultValue(AlignmentX.Left)]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public AlignmentX TextAlignment { get; set; } = AlignmentX.Left;
     
+    [DefaultValue("#FFFFFF")]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public string Color { get; set; } = "#FFFFFF";
     
     [JsonIgnore]

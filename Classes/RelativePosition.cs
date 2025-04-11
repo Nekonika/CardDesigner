@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 using CardDesigner.Enums;
 using CardDesigner.Interfaces;
 using Newtonsoft.Json;
@@ -8,8 +9,12 @@ namespace CardDesigner.Classes;
 [JsonObject]
 public class RelativePosition : IPosition
 {
+    [DefaultValue(AlignmentX.Left)]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public AlignmentX AlignmentX { get; set; } = AlignmentX.Left;
     
+    [DefaultValue(AlignmentY.Top)]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public AlignmentY AlignmentY { get; set; } = AlignmentY.Top;
 
     public (int X, int Y) GetPosition(Template template, Element element, Element? parent)

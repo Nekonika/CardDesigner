@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using CardDesigner.Interfaces;
 using Newtonsoft.Json;
@@ -15,7 +16,8 @@ public abstract class Element
     [JsonIgnore] 
     public Element? Parent { get; set; }
     
-    public required IPosition Position { get; set; } = new AbsolutPosition();
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+    public IPosition Position { get; set; } = new AbsolutPosition();
     
     [JsonRequired]
     public abstract int Width { get; set; }
@@ -23,6 +25,8 @@ public abstract class Element
     [JsonRequired]
     public abstract int Height { get; set; }
     
+    [DefaultValue("#00000000")]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public string Background { get; set; } = "#00000000";
     
     [JsonIgnore]
@@ -31,5 +35,6 @@ public abstract class Element
     [JsonIgnore]
     public SolidBrush BackgroundBrush => new SolidBrush(BackgroundColor);
     
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public Element[] Children { get; set; } = [];
 }

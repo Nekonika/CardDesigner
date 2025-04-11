@@ -1,4 +1,5 @@
-﻿using CardDesigner.Enums;
+﻿using System.ComponentModel;
+using CardDesigner.Enums;
 using Newtonsoft.Json;
 
 namespace CardDesigner.Classes;
@@ -9,12 +10,20 @@ public class ProgressBarElement : Element
     [JsonRequired]
     public float Value { get; set; }
 
+    [DefaultValue(Shape.Rectangle)]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public Shape Shape { get; set; } = Shape.Rectangle;
     
+    [DefaultValue("#00FF00")]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public string Color { get; set; } = "#00FF00";
     
+    [DefaultValue("#FFFFFF")]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public string BorderColor { get; set; } = "#FFFFFF";
     
+    [DefaultValue(0)]
+    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public float BorderWidth { get; set; }
     
     [JsonRequired]
