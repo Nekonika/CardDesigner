@@ -5,17 +5,41 @@ using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 using CardDesigner.Classes;
 using CardDesigner.Enums;
+using CardDesigner.Interfaces;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace CardDesigner;
 
 [SuppressMessage("Interoperability", "CA1416:Plattformkompatibilität überprüfen")]
 public static class CardDesigner
 {
+    private static readonly JsonSerializerSettings _JsonSerializerSettings = new JsonSerializerSettings
+    {
+        Formatting = Formatting.Indented,
+        TypeNameHandling = TypeNameHandling.Auto,
+        DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
+        NullValueHandling = NullValueHandling.Ignore,
+        Converters =
+        [
+            new StringEnumConverter()
+        ],
+        ContractResolver = new IgnoreEmptyCollectionContractResolver()
+            .IgnoreEmptyCollections()
+            .SetDefaultProperty(typeof(Element[]), Array.Empty<Element>())
+            .SetDefaultProperty(typeof(IPosition), new AbsolutPosition())
+    };
+    
     public delegate Task Log(string message);
     public static event Log? OnLog;
     private static void SendLog(string message)
         => OnLog?.Invoke(message).GetAwaiter().GetResult();
+    
+    public static string GetJsonFromTemplate(Template template, Formatting formatting = Formatting.Indented)
+        => JsonConvert.SerializeObject(template, formatting, _JsonSerializerSettings);
+
+    public static void WriteTemplateToFile(Template template, string path, Formatting formatting = Formatting.Indented)
+        => File.WriteAllText(path, GetJsonFromTemplate(template, formatting));
     
     public static Template GetTemplateFromFile(string templatePath)
     {
@@ -23,11 +47,7 @@ public static class CardDesigner
             throw new FileNotFoundException("Template not found", templatePath);
 
         string JsonContent = File.ReadAllText(templatePath);
-        Template Template = JsonConvert.DeserializeObject<Template>(JsonContent, new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Auto,
-            DefaultValueHandling = DefaultValueHandling.Ignore
-        })!;
+        Template Template = JsonConvert.DeserializeObject<Template>(JsonContent, _JsonSerializerSettings)!;
 
         return Template;
     }
