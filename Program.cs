@@ -9,6 +9,12 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        CardDesigner.OnLog += msg =>
+        {
+            Console.WriteLine(msg);
+            return Task.CompletedTask;
+        };
+        
         const string TemplatePath = "template.json";
         const string OutputPath = "welcome_card.png";
 

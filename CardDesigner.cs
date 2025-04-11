@@ -12,6 +12,11 @@ namespace CardDesigner;
 [SuppressMessage("Interoperability", "CA1416:Plattformkompatibilität überprüfen")]
 public static class CardDesigner
 {
+    public delegate Task Log(string message);
+    public static event Log? OnLog;
+    private static void SendLog(string message)
+        => OnLog?.Invoke(message).GetAwaiter().GetResult();
+    
     public static Template GetTemplateFromFile(string templatePath)
     {
         if (!File.Exists(templatePath))
@@ -61,14 +66,14 @@ public static class CardDesigner
         element.Parent = parent;
 
         (int X, int Y) = element.Position.GetPosition(template, element, parent);
-        Console.WriteLine($"Zeichne Element an ({X}, {Y}) mit Größe {element.Width}x{element.Height}");
+        SendLog($"Drawing element at ({X}, {Y}) with size {element.Width}x{element.Height}");
 
         SolidBrush BackgroundBrush = element.BackgroundBrush;
         
         switch (element)
         {
             case TextElement TextElement:
-                Console.WriteLine($"Text: {TextElement.Content}, Farbe: {TextElement.Color}");
+                SendLog($"Text: {TextElement.Content}, Color: {TextElement.Color}");
                 template.Graphics.FillRectangle(BackgroundBrush, X, Y, element.Width, element.Height);
                 
                 Regex NewLineRegex = RegexHelper.NewLineRegex;
@@ -93,7 +98,7 @@ public static class CardDesigner
                 break;
             
             case ImageElement ImageElement:
-                Console.WriteLine($"Bildpfad: {ImageElement.Path}, Shape: {ImageElement.Shape}");
+                SendLog($"Path: {ImageElement.Path}, Shape: {ImageElement.Shape}");
                 using (Bitmap Img = LoadImage(ImageElement.Path))
                 {
                     switch (ImageElement.Shape)
@@ -121,8 +126,8 @@ public static class CardDesigner
                 break;
             
             case ShapeElement ShapeElement:
-                Console.WriteLine($"Form: {ShapeElement.Shape}, Dicke: {ShapeElement.BorderThickness}");
-                Console.WriteLine($"Hintergrund: {ShapeElement.Background}, Farbe: {ShapeElement.BorderThickness}");
+                SendLog($"Shape: {ShapeElement.Shape}, Border Thickness: {ShapeElement.BorderThickness}");
+                SendLog($"Background: {ShapeElement.Background}, Color: {ShapeElement.Color}");
                 Pen ShapePen = ShapeElement.Pen;
                 switch (ShapeElement.Shape)
                 {
@@ -144,6 +149,8 @@ public static class CardDesigner
                 break;
             
             case ProgressBarElement ProgressBarElement:
+                SendLog($"Shape: {ProgressBarElement.Shape}, Value: {ProgressBarElement.Value}");
+                SendLog($"Background: {ProgressBarElement.Background}, Color: {ProgressBarElement.Color}");
                 float FilledWidth = (ProgressBarElement.Value / 100f) * ProgressBarElement.Width;
                 using (SolidBrush FillBrush = new SolidBrush(ColorTranslator.FromHtml(ProgressBarElement.Color)))
                 using (Pen BorderPen = new Pen(ColorTranslator.FromHtml(ProgressBarElement.BorderColor), ProgressBarElement.BorderWidth))
@@ -203,7 +210,7 @@ public static class CardDesigner
                 break;
                 }
         }
-
+        
         foreach (Element Child in element.Children)
             DrawElement(template, Child, element);
     }
@@ -227,11 +234,11 @@ public static class CardDesigner
             if (File.Exists(path))
                 return new Bitmap(path);
             
-            throw new FileNotFoundException("Bild konnte nicht geladen werden: " + path);
+            throw new FileNotFoundException("Image was not found: " + path);
         }
         catch (Exception Ex)
         {
-            Console.WriteLine("Fehler beim Laden des Bildes: " + Ex.Message);
+            SendLog("An error occured while trying to load an image: " + Ex.Message);
             return new Bitmap(1, 1);
         }
     }
