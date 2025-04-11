@@ -16,5 +16,8 @@ public class AbsolutPosition : IPosition
     public int Y { get; set; }
 
     public (int X, int Y) GetPosition(Template template, Element element, Element? parent)
-        => (X, Y);
+    {
+        (int ParentX, int ParentY) = parent?.Position.GetPosition(template, parent, parent.Parent) ?? (0,0);
+        return (ParentX + X, ParentY + Y);
+    }
 }
