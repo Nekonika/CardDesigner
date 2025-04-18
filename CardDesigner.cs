@@ -195,29 +195,33 @@ public static class CardDesigner
                                 template.Graphics.FillPath(BackgroundBrush, Border);
                                 
                                 // Progress
-                                using (GraphicsPath FilledPath = new GraphicsPath())
+                                if (FilledWidth > 0)
                                 {
-                                    if (FilledWidth > 0)
+                                    using GraphicsPath FilledPath = new GraphicsPath();
+                                    template.Graphics.SetClip(Border);
+                                    FilledPath.StartFigure();
+                                    
+                                    FilledPath.AddArc(X, Y, ProgressBarElement.Height, ProgressBarElement.Height,
+                                        90, 180);
+                                    if (FilledWidth > ProgressBarElement.Height)
                                     {
-                                        FilledPath.StartFigure();
-                                        FilledPath.AddArc(X, Y, ProgressBarElement.Height, ProgressBarElement.Height, 90, 180);
-                                        if (FilledWidth > ProgressBarElement.Height)
-                                        {
-                                            float Radius = ProgressBarElement.Height / 2f;
-                                            float FilledRight = X + FilledWidth;
-                                            FilledPath.AddLine(X + Radius, Y, FilledRight - Radius, Y);
-                                            FilledPath.AddArc(FilledRight - ProgressBarElement.Height, Y, ProgressBarElement.Height, ProgressBarElement.Height, 270, 180);
-                                        }
-                                        else
-                                        {
-                                            FilledPath.AddArc(X, Y, FilledWidth * 2, ProgressBarElement.Height, 90, -180);
-                                        }
-                                        FilledPath.CloseFigure();
-                                        
-                                        template.Graphics.FillPath(FillBrush, FilledPath);
+                                        float Radius = ProgressBarElement.Height / 2f;
+                                        float FilledRight = X + FilledWidth;
+                                        FilledPath.AddLine(X + Radius, Y, FilledRight - Radius, Y);
+                                        FilledPath.AddArc(FilledRight - ProgressBarElement.Height, Y,
+                                            ProgressBarElement.Height, ProgressBarElement.Height, 270, 180);
                                     }
+                                    else
+                                    {
+                                        FilledPath.AddLine(X + (FilledWidth / 2f), Y, X + (FilledWidth / 2f), Y + ProgressBarElement.Height);
+                                    }
+
+                                    FilledPath.CloseFigure();
+
+                                    template.Graphics.FillPath(FillBrush, FilledPath);
+                                    template.Graphics.ResetClip();
                                 }
-                                
+
                                 // Border
                                 template.Graphics.DrawPath(BorderPen, Border);
                             }
