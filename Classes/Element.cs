@@ -37,4 +37,7 @@ public abstract class Element
     
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public Element[] Children { get; set; } = [];
+    
+    public Element ShallowCopy()
+        => (Element)MemberwiseClone();
 }

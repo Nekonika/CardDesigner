@@ -33,4 +33,7 @@ public class ShapeElement : Element
     
     [JsonRequired]
     public override int Height { get; set; }
+    
+    public new ShapeElement ShallowCopy()
+        => (ShapeElement)MemberwiseClone();
 }

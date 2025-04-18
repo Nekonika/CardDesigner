@@ -20,4 +20,7 @@ public class AbsolutPosition : IPosition
         (int ParentX, int ParentY) = parent?.Position.GetPosition(template, parent, parent.Parent) ?? (0,0);
         return (ParentX + X, ParentY + Y);
     }
+    
+    public AbsolutPosition ShallowCopy()
+        => (AbsolutPosition)MemberwiseClone();
 }

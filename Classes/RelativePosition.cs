@@ -55,4 +55,7 @@ public class RelativePosition : IPosition
             _ => parentPos
         };
     }
+    
+    public RelativePosition ShallowCopy()
+        => (RelativePosition)MemberwiseClone();
 }

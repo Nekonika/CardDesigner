@@ -19,4 +19,7 @@ public class ImageElement : Element
     
     [JsonRequired]
     public override int Height { get; set; }
+    
+    public new ImageElement ShallowCopy()
+        => (ImageElement)MemberwiseClone();
 }

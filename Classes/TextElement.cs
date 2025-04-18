@@ -62,4 +62,7 @@ public class TextElement : Element
             return Template.Graphics.MeasureString(Content, Font);
         }
     }
+    
+    public new TextElement ShallowCopy()
+        => (TextElement)MemberwiseClone();
 }

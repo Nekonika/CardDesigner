@@ -31,4 +31,7 @@ public class ProgressBarElement : Element
     
     [JsonRequired]
     public override int Height { get; set; }
+    
+    public new ProgressBarElement ShallowCopy()
+        => (ProgressBarElement)MemberwiseClone();
 }

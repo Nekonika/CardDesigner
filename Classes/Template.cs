@@ -24,4 +24,7 @@ public class Template
     
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
     public Element[] Children { get; set; } = [];
+    
+    public Template ShallowCopy()
+        => (Template)MemberwiseClone();
 }
