@@ -27,4 +27,7 @@ public class Template
     
     public Template ShallowCopy()
         => (Template)MemberwiseClone();
+
+    public Template DeepCopy()
+        => this.Copy();
 }
