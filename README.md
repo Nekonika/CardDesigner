@@ -36,6 +36,22 @@ Type: `"$type": "CardDesigner.Classes.ImageElement, CardDesigner"`
 | Width  |   [X]    | `integer` |           | The width of the image. Images will be stretched.                             |
 | Height |   [X]    | `integer` |           | The height of the image. Images will be stretched.                            |
 
+### ProgressBarElement : Element
+
+This Element inherits from the base Element.
+That means as much as that it can use the properties of Element aswell.
+Type: `"$type": "CardDesigner.Classes.ProgressBarElement, CardDesigner"`
+
+| Name        | Required | Type      | Default   | Description                                                        |
+| :---------- | :------: | :-------- | :-------- | :----------------------------------------------------------------- |
+| Value       |   [X]    | `float`   |           | To how much percent the progressbar should be filled to. (0 - 100) |
+| Shape       |   [ ]    | `Shape`   | Rectangle | The shape of this element.                                         |
+| Color       |   [ ]    | `string`  | #00FF00   | The color of the progressbar.                                      |
+| BorderColor |   [ ]    | `string`  | #FFFFFF   | The color of the progressbars border.                              |
+| BorderWidth |   [ ]    | `float`   | 0         | The width of the progressbars border.                              |
+| Width       |   [X]    | `integer` |           | The width of the image. Images will be stretched.                  |
+| Height      |   [X]    | `integer` |           | The height of the image. Images will be stretched.                 |
+
 ### ShapeElement : Element
 
 This Element inherits from the base Element.
